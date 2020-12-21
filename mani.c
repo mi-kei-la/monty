@@ -1,3 +1,8 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include "monty.h"
 
 /**
@@ -13,45 +18,73 @@
 
 int main(int ac, char **av)
 {
-	int n = 0, fd = 0, ret = 0, i, j;
-	char *line = NULL, *token = NULL;
-	unsigned int size = 0, line_count = 1;
-	stack_t *head = NULL;
-	instruction_t getfunckd[] = {{"push", push_node},
-		{"pall", print_stuck}, {NULL, NULL, 0}};
+	int ret = 0, line_number = 0;
+	char *line = NULL;
+	size_t size = 0;
+	FILE *fd;
 
 	if (ac != 2)
 	{
-		fprintf(2, "USAGE: monty file\n");
+		fprintf(stderr, "USAGE: monty file\n");
 		return (EXIT_FAILURE);
 	}
 
 	fd = open(av[1], O_RDONLY);
-	if (fd == -1)
+	if (*fd == -1)
 	{
-		fprintf(2, "Error: Can't open file %s\n", argv[1]);
+		fprintf(stderr, "Error: Can't open file %s\n", av[1]);
 		return (EXIT_FAILURE);
 	}
-
+	input_parse = 0;
 	while (ret != -1)
 	{
 		ret = getline(&line, &size, fd);
-		token = strtok(line, ' ')
-		for (i = 0; i < 3; i++)
-		{
-			if (strcmp(getfunckd[i].opcode, token) == 0)
-			{
-				getfunckd[i].f(**stack, line_count, strtok(NULL, ' '));
-
-			}
-
-		}
-		line_count++;
+		tokline(line);
+		input_parse += ret; /* YOU NEED A STRUCTURE THAT CAN HOLD ARRAYS */
+		line_number++;
 	}
-	if (ret == EOF)
-		return (EXIT_SUCCESS);
+	data_parse = 0;
+	instructer(input_parse, line_number);
 
 }
 
+void tokline(char *line)
+{
+	char delim[] = " \t\r\n";
 
+	data[input_parse] = strtok(line, delim);
+	input_parse++; /* THIS IS CONCEPTUALLY WRONG */
 
+	while (data[input_parse] != NULL)
+	{
+		data[input_parse] = strtok(NULL, delim);
+	}
+}
+
+void instructer(int input_parse, int line_number)
+{
+	instruction_t ops[] = {
+		{"push", push_node}, {"pint", print_stuck},
+		{NULL, NULL}
+	};
+	int i;
+	stack_t *stack = NULL;
+
+	while (data_parse < input_parse)
+	{
+		for (i = 0; i < 3; i++)
+		{
+			if (strcmp(ops[i].opcode, data[data_parse]) == 0)
+			{
+				ops[i].f(&stack, line_number);
+				break;
+			}
+			if (ops[i].opcode == NULL)
+			{
+				fprintf(stderr, "L%d: unknown instruction %s\n", line_number, data[data_parse]);
+				exit(EXIT_FAILURE);
+			}
+		}
+		data_parse++;
+	}
+}
