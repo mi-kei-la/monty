@@ -1,7 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "monty.h"
-
+char *line;
 /**
   * print_stuck - print all elements of the stack
   *
@@ -10,15 +8,12 @@
   */
 void print_stuck(stack_t **stack, unsigned int line_number)
 {
-	stack_t *tmp = *stack;
+	stack_t *tmp = (*stack);
 	(void) line_number;
-
-	if (stack == NULL)
-		exit(EXIT_FAILURE);
 
 	while (tmp != NULL)
 	{
-		printf("%d\n", tmp->n);
+		printf("%i\n", tmp->n);
 		tmp = tmp->next;
 	}
 }
@@ -33,16 +28,20 @@ void print_stuck(stack_t **stack, unsigned int line_number)
 void push_node(stack_t **stack, unsigned int line_number)
 {
 	stack_t *new = NULL;
-	int n = 0;
+	char *num = NULL;
+	int len = 0;
 
-	data_parse++;
-	if (data[data_parse] < 48 || data[data_parse] > 57)
+	len = strlen(line);
+	line[len - 1] = '\0';
+	num = strtok(line, " ");
+	num = strtok(NULL, " ");
+
+	if ((num[0] < 48 || num[0] > 57) && num[0] != '-')
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", line_number);
+		free_stack(*stack);
 		exit(EXIT_FAILURE);
 	}
-	else
-		n = data[data_parse];
 
 	new = malloc(sizeof(stack_t));
 	if (new == NULL)
@@ -50,17 +49,26 @@ void push_node(stack_t **stack, unsigned int line_number)
 		fprintf(stderr, "Error: malloc failed\n");
 		exit(EXIT_FAILURE);
 	}
-
 	new->prev = NULL;
-	new->n = n;
+	new->n = atoi(num);
 	new->next = *stack;
-	if (*stack == NULL)
-		*stack = new;
-	else
-	{
+	if (*stack != NULL)
 		(*stack)->prev = new;
-		*stack = new;
+	*stack = new;
+}
+
+void free_stack(stack_t *stack)
+{
+	stack_t *tmp = stack;
+
+	if (tmp == NULL)
+		return;
+
+	while (stack != NULL)
+	{
+		tmp = stack;
+		stack = stack->next;
+		free(tmp);
 	}
-	
 }
 

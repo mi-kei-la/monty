@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <fcntl.h>
+#include <string.h>
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -36,15 +38,18 @@ typedef struct instruction_s
 } instruction_t;
 
 /* mani.c */
+/*
 void tokline(char *line);
-void instructer(int input_parse, int line_number);
-
+void instructer(int input_parse, int line_number, stack_t **stack);
+*/
 /* list_funcks.c */
 void push_node(stack_t **stack, unsigned int line_number);
 void print_stuck(stack_t **stack, unsigned int line_number);
+void free_stack(stack_t *stack);
+
 
 /* extern variables */
-char *data;
-int input_parse, data_parse;
+extern char *line;
+
 
 #endif
