@@ -8,6 +8,7 @@
 #include <fcntl.h>
 #include <string.h>
 #include <unistd.h>
+#include <ctype.h>
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -52,6 +53,7 @@ void diva(stack_t **stack, unsigned int line_number);
 void emule(stack_t **stack, unsigned int line_number);
 void mood(stack_t **stack, unsigned int line_number);
 void puchero(stack_t **stack, unsigned int line_number);
+void nope(stack_t **stack, unsigned int line_number);
 
 /* list_funcks.c */
 void push_node(stack_t **stack, unsigned int line_number);

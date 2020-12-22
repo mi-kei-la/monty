@@ -21,7 +21,7 @@ int main(int ac, char **av)
 		{"push", push_node}, {"pall", print_stuck},
 		{"pint", print_int}, {"pop", popper},
 		{"swap", swapper}, {"add", adderall},
-		{"nop", NULL}, {"sub", sub}, {"div", diva},
+		{"nop", nope}, {"sub", sub}, {"div", diva},
 		{"mul", emule}, {"mod", mood}, {"pchar", puchero},
 		{NULL, NULL}
 	};

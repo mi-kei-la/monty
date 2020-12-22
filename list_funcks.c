@@ -29,20 +29,22 @@ void push_node(stack_t **stack, unsigned int line_number)
 {
 	stack_t *new = NULL;
 	char *num = NULL;
-	int len = 0;
+	int len = 0, i;
 
 	len = strlen(line);
 	line[len - 1] = '\0';
 	num = strtok(line, " ");
 	num = strtok(NULL, " ");
 
-	if ((num[0] < 48 || num[0] > 57) && num[0] != '-')
+	for (i = 0; line[i] != 0; i++)
 	{
-		fprintf(stderr, "L%d: usage: push integer\n", line_number);
-		free_stack(*stack);
-		exit(EXIT_FAILURE);
+		if (isdigit(line[i] == 0))
+		{
+			fprintf(stderr, "L%d: usage: push integer\n", line_number);
+			free_stack(*stack);
+			exit(EXIT_FAILURE);
+		}
 	}
-
 	new = malloc(sizeof(stack_t));
 	if (new == NULL)
 	{

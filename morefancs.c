@@ -62,3 +62,9 @@ void puchero(stack_t **stack, unsigned int line_number)
 	}
 	write(1, &c, 1);
 }
+
+void nope(stack_t **stack, unsigned int line_number)
+{
+	(void)stack;
+	(void)line_number;
+}
