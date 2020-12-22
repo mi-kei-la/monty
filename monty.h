@@ -37,19 +37,20 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-/* mani.c */
-/*
-void tokline(char *line);
-void instructer(int input_parse, int line_number, stack_t **stack);
-*/
+/* extern variables */
+extern char *line;
+
+/* divs.c */
+FILE *getfile(int ac, char **av);
+void free_stack(stack_t *stack);
+
 /* list_funcks.c */
 void push_node(stack_t **stack, unsigned int line_number);
 void print_stuck(stack_t **stack, unsigned int line_number);
-void free_stack(stack_t *stack);
+void print_int(stack_t **stack, unsigned int line_number);
+void swapper(stack_t **stack, unsigned int line_number);
 
 
-/* extern variables */
-extern char *line;
 
 
 #endif

@@ -57,18 +57,40 @@ void push_node(stack_t **stack, unsigned int line_number)
 	*stack = new;
 }
 
-void free_stack(stack_t *stack)
+/**
+ * print_int - print first element of the stack
+ * 
+ * @stack: pointer to first node of the stack
+ * @line_number: line number
+ */
+void print_int(stack_t **stack, unsigned int line_number)
 {
-	stack_t *tmp = stack;
-
-	if (tmp == NULL)
-		return;
-
-	while (stack != NULL)
+	if (*stack == NULL)
 	{
-		tmp = stack;
-		stack = stack->next;
-		free(tmp);
+		fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
+		exit(EXIT_FAILURE);
 	}
+	printf("%d\n", (*stack)->n);
 }
 
+/**
+* swapper - swap values
+*
+* @stack: pointer to beginning of a list
+* @line_number: line number
+*/
+
+void swapper(stack_t **stack, unsigned int line_number)
+{
+	int aux = 0;
+
+	if ((*stack)->next == NULL)
+	{
+		fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+
+	aux = (*stack)->n;
+	(*stack)->n = (*stack)->next->n;
+	(*stack)->next->n = aux;
+}

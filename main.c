@@ -1,5 +1,5 @@
 #include "monty.h"
-char *line;
+
 /**
   * main - entry point
   *
@@ -19,42 +19,30 @@ int main(int ac, char **av)
 	char *data = NULL, delims[] = " \t\n\r", *save = NULL;
 	instruction_t codes[] = {
 		{"push", push_node}, {"pall", print_stuck},
-		{NULL, NULL}
+		{"pint", print_int}, {"swap", swapper},
+		{"nop", NULL}, {NULL, NULL}
 	};
 	stack_t *head = NULL;
 
-
-	if (ac != 2)
-	{
-		fprintf(stderr, "USAGE: monty file\n");
-		return (EXIT_FAILURE);
-	}
-	fd = fopen(av[1], "r");
-	if (!fd)
-	{
-		fprintf(stderr, "Error: Can't open file %s\n", av[1]);
-		return (EXIT_FAILURE);
-	}
+	fd = getfile(ac, av);
 	line = NULL;
 	while (ret != -1)
 	{
 		ret = getline(&line, &size, fd);
 		if (line == NULL || strcmp(line, "") == 0)
 			break;
-/*		len = strlen(line);
-		line[len - 1] = '\0';
-*/		save = strdup(line);
+		save = strdup(line);
 		data = strtok(save, delims);
 		while (data != NULL)
 		{
-			for (i = 0; i < 3; i++)
+			for (i = 0; i < 4; i++)
 			{
 				if (strcmp(data, codes[i].opcode) == 0)
 				{
 					codes[i].f(&head, line_number);
 					break;
 				}
-				else if (i == 2)
+				else if (i == 3)
 				{
 					fprintf(stderr, "L%d: unknown instruction %s\n", line_number, data);
 				}
@@ -62,13 +50,8 @@ int main(int ac, char **av)
 			data = strtok(NULL, delims);
 		}
 		line_number++;
-		line = NULL;
 	}
-
 	fclose(fd);
-	free(save);
-	free(line);
-	free(data);
 	free_stack(head);
 	if (ret == EOF)
 		return (EXIT_SUCCESS);
