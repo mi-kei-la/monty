@@ -35,7 +35,7 @@ int main(int ac, char **av)
 		data = strtok(save, delims);
 		while (data != NULL)
 		{
-			for (i = 0; i < 4; i++)
+			for (i = 0; i < 5; i++)
 			{
 				if (strcmp(data, codes[i].opcode) == 0)
 				{
@@ -45,6 +45,7 @@ int main(int ac, char **av)
 				else if (i == 3)
 				{
 					fprintf(stderr, "L%d: unknown instruction %s\n", line_number, data);
+					return (EXIT_FAILURE);
 				}
 			}
 			data = strtok(NULL, delims);
@@ -53,7 +54,5 @@ int main(int ac, char **av)
 	}
 	fclose(fd);
 	free_stack(head);
-	if (ret == EOF)
-		return (EXIT_SUCCESS);
-	return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
