@@ -14,17 +14,22 @@
 int main(int ac, char **av)
 {
 	FILE *fd = NULL;
-	int i, ret = 0, line_number = 1;
+	int i, ret = 0, line_number = 1, opcount = 11;
 	size_t size = 0;
 	char *data = NULL, delims[] = " \t\n\r", *save = NULL;
 	instruction_t codes[] = {
 		{"push", push_node}, {"pall", print_stuck},
-		{"pint", print_int}, {"swap", swapper},
-		{"nop", NULL}, {NULL, NULL}
+		{"pint", print_int}, {"pop", popper},
+		{"swap", swapper}, {"add", adderall},
+		{"nop", NULL}, {"sub", sub}, {"div", diva},
+		{"mul", emule}, {"mod", mood}, {"pchar", puchero},
+		{NULL, NULL}
 	};
 	stack_t *head = NULL;
 
 	fd = getfile(ac, av);
+	if (fd == NULL)
+		return (EXIT_FAILURE);
 	line = NULL;
 	while (ret != -1)
 	{
@@ -35,14 +40,14 @@ int main(int ac, char **av)
 		data = strtok(save, delims);
 		while (data != NULL)
 		{
-			for (i = 0; i < 5; i++)
+			for (i = 0; i < opcount; i++)
 			{
 				if (strcmp(data, codes[i].opcode) == 0)
 				{
 					codes[i].f(&head, line_number);
 					break;
 				}
-				else if (i == 3)
+				else if (i == opcount)
 				{
 					fprintf(stderr, "L%d: unknown instruction %s\n", line_number, data);
 					return (EXIT_FAILURE);
