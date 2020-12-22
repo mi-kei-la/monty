@@ -31,9 +31,9 @@ int main(int ac, char **av)
 	if (fd == NULL)
 		return (EXIT_FAILURE);
 	line = NULL;
+	ret = getline(&line, &size, fd);
 	while (ret != -1)
 	{
-		ret = getline(&line, &size, fd);
 		if (line == NULL || strcmp(line, "") == 0)
 			break;
 		save = strdup(line);
@@ -56,6 +56,7 @@ int main(int ac, char **av)
 			data = strtok(NULL, delims);
 		}
 		line_number++;
+		ret = getline(&line, &size, fd);
 	}
 	fclose(fd);
 	free_stack(head);
