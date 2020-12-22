@@ -50,6 +50,12 @@ int main(int ac, char **av)
 				else if (i == opcount)
 				{
 					fprintf(stderr, "L%d: unknown instruction %s\n", line_number, data);
+					free(line);
+					free(data);
+					fclose(fd);
+					free(fd);
+					free(save);
+					free_stack(head);
 					return (EXIT_FAILURE);
 				}
 			}
@@ -58,7 +64,11 @@ int main(int ac, char **av)
 		line_number++;
 		ret = getline(&line, &size, fd);
 	}
+	free(line);
+	free(data);
 	fclose(fd);
+	free(fd);
+	free(save);
 	free_stack(head);
 	return (EXIT_SUCCESS);
 }
