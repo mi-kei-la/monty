@@ -30,8 +30,8 @@ FILE *getfile(int ac, char **av)
 
 /**
  * free_stack - free a doubly linked (stack) list
- * 
- * stack: pointer to head
+ *
+ * @stack: pointer to head
  */
 
 void free_stack(stack_t *stack)
@@ -51,7 +51,7 @@ void free_stack(stack_t *stack)
 
 /**
  * adderall - add first two nodes
- * 
+ *
  * @stack: pointer to beginning of a list
  * @line_number: line number
  */
@@ -69,7 +69,7 @@ void adderall(stack_t **stack, unsigned int line_number)
 
 /**
  * sub - substract first two nodes
- * 
+ *
  * @stack: pointer to beginning of a list
  * @line_number: line number
  */
@@ -81,13 +81,13 @@ void sub(stack_t **stack, unsigned int line_number)
 		exit(EXIT_FAILURE);
 	}
 
-	(*stack)->next->n = (*stack)->next->n - (*stack)->n ;
+	(*stack)->next->n = (*stack)->next->n - (*stack)->n;
 	popper(stack, line_number);
 }
 
 /**
  * diva - divide first two nodes
- * 
+ *
  * @stack: pointer to beginning of a list
  * @line_number: line number
  */
@@ -103,6 +103,6 @@ void diva(stack_t **stack, unsigned int line_number)
 		fprintf(stderr, "L%d: division by zero\n", line_number);
 		exit(EXIT_FAILURE);
 	}
-	(*stack)->next->n = (*stack)->next->n / (*stack)->n ;
+	(*stack)->next->n = (*stack)->next->n / (*stack)->n;
 	popper(stack, line_number);
 }

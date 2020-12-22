@@ -59,7 +59,7 @@ void push_node(stack_t **stack, unsigned int line_number)
 
 /**
  * print_int - print first element of the stack
- * 
+ *
  * @stack: pointer to first node of the stack
  * @line_number: line number
  */
@@ -97,9 +97,9 @@ void swapper(stack_t **stack, unsigned int line_number)
 
 /**
  * popper - remove node at start
- * 
-* @stack: pointer to beginning of a list
-* @line_number: line number
+ *
+ * @stack: pointer to beginning of a list
+ * @line_number: line number
  */
 void popper(stack_t **stack, unsigned int line_number)
 {
